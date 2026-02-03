@@ -179,6 +179,10 @@ type Editor interface {
 	// Note: the body values in the return value are a copy and modifying them won't affect the board.
 	SnakeBodies() map[string][]rules.Point
 
+	// Get the bodies of all snakes in deterministic order (slice insertion order).
+	// Unlike SnakeBodies(), the returned slice order is stable across runs.
+	OrderedSnakeBodies() [][]rules.Point
+
 	// Get an editable reference to the BoardState's GameState field
 	GameState() map[string]string
 
@@ -286,6 +290,15 @@ func (editor *BoardStateEditor) SnakeBodies() map[string][]rules.Point {
 		result[snake.ID] = append([]rules.Point(nil), snake.Body...)
 	}
 
+	return result
+}
+
+// Get the bodies of all snakes in deterministic order (slice insertion order).
+func (editor *BoardStateEditor) OrderedSnakeBodies() [][]rules.Point {
+	result := make([][]rules.Point, 0, len(editor.boardState.Snakes))
+	for _, snake := range editor.boardState.Snakes {
+		result = append(result, append([]rules.Point(nil), snake.Body...))
+	}
 	return result
 }
 

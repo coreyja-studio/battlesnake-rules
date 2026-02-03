@@ -146,9 +146,9 @@ func TestRulesetBuilderGetRand(t *testing.T) {
 
 	rand1 := ruleset.Settings().GetRand(turn)
 
-	// Should produce a predictable series of numbers based on a seed
-	require.Equal(t, 83, rand1.Intn(100))
-	require.Equal(t, 15, rand1.Intn(100))
+	// Should produce a predictable series of numbers based on a seed (MINSTD PRNG)
+	require.Equal(t, 1, rand1.Intn(100))
+	require.Equal(t, 44, rand1.Intn(100))
 
 	// Should produce the same number if re-initialized
 	require.Equal(
@@ -157,7 +157,7 @@ func TestRulesetBuilderGetRand(t *testing.T) {
 		ruleset.Settings().GetRand(turn).Intn(100),
 	)
 
-	// Should produce a different series of numbers for another turn
-	require.Equal(t, 69, rand1.Intn(100))
-	require.Equal(t, 86, rand1.Intn(100))
+	// Continued sequence from same RNG instance
+	require.Equal(t, 96, rand1.Intn(100))
+	require.Equal(t, 90, rand1.Intn(100))
 }

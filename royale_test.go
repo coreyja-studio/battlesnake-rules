@@ -69,15 +69,15 @@ func TestRoyaleHazards(t *testing.T) {
 		},
 		{
 			Width: 3, Height: 3, Turn: 20, ShrinkEveryNTurns: 10,
-			ExpectedHazards: []Point{{X: 0, Y: 0}, {X: 0, Y: 1}, {X: 0, Y: 2}, {X: 1, Y: 2}, {X: 2, Y: 2}},
+			ExpectedHazards: []Point{{X: 0, Y: 0}, {X: 0, Y: 1}, {X: 0, Y: 2}, {X: 1, Y: 0}, {X: 2, Y: 0}},
 		},
 		{
 			Width: 3, Height: 3, Turn: 31, ShrinkEveryNTurns: 10,
-			ExpectedHazards: []Point{{X: 0, Y: 0}, {X: 0, Y: 1}, {X: 0, Y: 2}, {X: 1, Y: 1}, {X: 1, Y: 2}, {X: 2, Y: 1}, {X: 2, Y: 2}},
+			ExpectedHazards: []Point{{X: 0, Y: 0}, {X: 0, Y: 1}, {X: 0, Y: 2}, {X: 1, Y: 0}, {X: 1, Y: 2}, {X: 2, Y: 0}, {X: 2, Y: 2}},
 		},
 		{
 			Width: 3, Height: 3, Turn: 42, ShrinkEveryNTurns: 10,
-			ExpectedHazards: []Point{{X: 0, Y: 0}, {X: 0, Y: 1}, {X: 0, Y: 2}, {X: 1, Y: 0}, {X: 1, Y: 1}, {X: 1, Y: 2}, {X: 2, Y: 0}, {X: 2, Y: 1}, {X: 2, Y: 2}},
+			ExpectedHazards: []Point{{X: 0, Y: 0}, {X: 0, Y: 1}, {X: 0, Y: 2}, {X: 1, Y: 0}, {X: 1, Y: 2}, {X: 2, Y: 0}, {X: 2, Y: 1}, {X: 2, Y: 2}},
 		},
 		{
 			Width: 3, Height: 3, Turn: 53, ShrinkEveryNTurns: 10,

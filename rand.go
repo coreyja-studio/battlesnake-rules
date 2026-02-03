@@ -52,6 +52,66 @@ func (s seedRand) Shuffle(n int, swap func(i, j int)) {
 	s.rand.Shuffle(n, swap)
 }
 
+// MINSTD Park-Miller PRNG (revised, 1993).
+// Portable across Go and Rust for deterministic cross-engine verification.
+// Algorithm: state(n+1) = (state(n) * 48271) mod 2147483647
+const (
+	minstdA          uint64 = 48271
+	minstdM          uint64 = 2147483647 // 2^31 - 1
+	splitmix64Golden uint64 = 0x9e3779b97f4a7c15
+)
+
+type MinstdRand struct {
+	state uint64
+}
+
+func NewMinstdRand(seed int64) *MinstdRand {
+	s := uint64(seed) % (minstdM - 1)
+	if s == 0 {
+		s = 1
+	}
+	return &MinstdRand{state: s}
+}
+
+func (r *MinstdRand) Next() uint64 {
+	r.state = (r.state * minstdA) % minstdM
+	return r.state
+}
+
+func (r *MinstdRand) Intn(n int) int {
+	return int(r.Next() % uint64(n))
+}
+
+func (r *MinstdRand) Range(min, max int) int {
+	return r.Intn(max-min+1) + min
+}
+
+func (r *MinstdRand) Shuffle(n int, swap func(i, j int)) {
+	for i := n - 1; i > 0; i-- {
+		j := r.Intn(i + 1)
+		swap(i, j)
+	}
+}
+
+// splitmix64Mix is a finalizer for decorrelating adjacent seeds.
+func splitmix64Mix(x uint64) uint64 {
+	x ^= x >> 30
+	x *= 0xbf58476d1ce4e5b9
+	x ^= x >> 27
+	x *= 0x94d049bb133111eb
+	x ^= x >> 31
+	return x
+}
+
+// NewMinstdSeedRand creates a MINSTD PRNG seeded for a specific turn.
+// Uses splitmix64 to mix gameSeed and turn, preventing correlated sequences.
+func NewMinstdSeedRand(gameSeed int64, turn int) *MinstdRand {
+	combined := (uint64(gameSeed) ^ uint64(turn)) + splitmix64Golden
+	raw := splitmix64Mix(combined)
+	bounded := (raw % (minstdM - 1)) + 1
+	return NewMinstdRand(int64(bounded))
+}
+
 // For testing purposes
 
 // A Rand implementation that always returns the minimum value for any method.
