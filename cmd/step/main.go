@@ -27,11 +27,11 @@ type StepRequest struct {
 
 // BoardStateJSON is the JSON representation of a board state.
 type BoardStateJSON struct {
-	Width   int             `json:"width"`
-	Height  int             `json:"height"`
-	Food    []PointJSON     `json:"food"`
-	Snakes  []SnakeJSON     `json:"snakes"`
-	Hazards []PointJSON     `json:"hazards"`
+	Width   int         `json:"width"`
+	Height  int         `json:"height"`
+	Food    []PointJSON `json:"food"`
+	Snakes  []SnakeJSON `json:"snakes"`
+	Hazards []PointJSON `json:"hazards"`
 }
 
 type PointJSON struct {
@@ -40,12 +40,12 @@ type PointJSON struct {
 }
 
 type SnakeJSON struct {
-	ID              string      `json:"id"`
-	Body            []PointJSON `json:"body"`
-	Health          int         `json:"health"`
-	EliminatedCause string     `json:"eliminated_cause,omitempty"`
-	EliminatedOnTurn int       `json:"eliminated_on_turn,omitempty"`
-	EliminatedBy    string     `json:"eliminated_by,omitempty"`
+	ID               string      `json:"id"`
+	Body             []PointJSON `json:"body"`
+	Health           int         `json:"health"`
+	EliminatedCause  string      `json:"eliminated_cause,omitempty"`
+	EliminatedOnTurn int         `json:"eliminated_on_turn,omitempty"`
+	EliminatedBy     string      `json:"eliminated_by,omitempty"`
 }
 
 type SnakeMoveJSON struct {
