@@ -45,7 +45,7 @@ func (settings Settings) GetRand(turn int) Rand {
 	}
 
 	if settings.seed != 0 {
-		return NewSeedRand(settings.seed + int64(turn))
+		return NewMinstdSeedRand(settings.seed, turn)
 	}
 
 	// Default to global random number generator if neither seed or rand are set.

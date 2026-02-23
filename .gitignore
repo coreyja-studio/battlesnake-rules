@@ -12,3 +12,4 @@
 # Devcontainers
 .devcontainer
 !.devcontainer/devcontainer.json
+/step

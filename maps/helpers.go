@@ -231,7 +231,9 @@ func PlaceFoodFixed(rand rules.Rand, initialBoardState *rules.BoardState, editor
 
 	// Up to 4 snakes can be placed such that food is nearby on small boards.
 	// Otherwise, we skip this and only try to place food in the center.
-	snakeBodies := editor.SnakeBodies()
+	// NOTE: We use OrderedSnakeBodies() (a slice) rather than SnakeBodies()
+	// (a map) to ensure deterministic iteration order across runs.
+	snakeBodies := editor.OrderedSnakeBodies()
 	if len(snakeBodies) <= 4 || !isSmallBoard {
 		// Place 1 food within exactly 2 moves of each snake, but never towards the center or in a corner
 		for _, snakeBody := range snakeBodies {
